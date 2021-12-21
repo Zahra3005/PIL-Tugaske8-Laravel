@@ -71,7 +71,13 @@ class CobaController extends Controller
      */
     public function show($id)
     {
-        //
+        $friend = friends::where('id',$id)->first();
+
+        return response()->json([
+            'success'=> true,
+            'message'=> 'Detail teman',
+            'data'=> $friend
+        ], 200);
     }
 
     /**
@@ -83,7 +89,18 @@ class CobaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $friend = friends::find($id)
+        ->update([
+            'nama'=>  $request->nama,
+            'no_tlp' => $request->no_tlp,
+            'alamat' => $request->alamat,
+            'id' => $request->id 
+        ]);
+        return response()->json([
+            'success'=> true,
+            'message'=> 'Data teman berhasil dirubah',
+            'data'=> $friend  
+        ],200);
     }
 
     /**
@@ -94,6 +111,11 @@ class CobaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $friend = friends::find($id)->delete();
+        return response()->json([
+            'success'=> true,
+            'message'=> 'Data teman berhasil dihapus',
+            'data'=> $friend  
+        ],200);
     }
 }
